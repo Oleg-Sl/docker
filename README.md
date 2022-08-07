@@ -1,13 +1,13 @@
 # ***Docker***
 
 * [Install](#docker-install)
-* [Container](#container)
+* [Container](#docker-container)
 * [Images](#images)
 
 
-<!-- <a id="install"></a> -->
 
 ## **DOCKER INSTALL**
+[Официальная документация - install](https://docs.docker.com/engine/install/ubuntu/)
 1. Обновите индекс apt-пакета и установите пакеты, чтобы разрешить apt использование репозитория по протоколу HTTPS:
 ```
 sudo apt-get update
@@ -34,12 +34,32 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 5. Добавление своего пользователя в docker-группу.
+[Официальная документация - postinstall](https://docs.docker.com/engine/install/linux-postinstall/)
 ```
 sudo usermod -aG docker $USER
 ```
 
-<a id="container"></a>
 
+## **DOCKER CONTAINER**
+*Список команд docker-container*
 
-<a id="images"></a>
+| Команда | Описание |
+|---|---|
+|docker ps	| Таблица со всеми запущенными контейнерами
+|docker ps -a	| Таблица со всеми остановленными контейнерами
+|docker rm <NAME> | 
+|docker rm <CONTAINER_ID>	| Удаление контейнера
+|docker create --name <имя> <имя_контейнера_в_репозитории>	| Создание контейнера
+|docker run -d <контейнер> | 
+|docker run --name <имя> -d <контейнер>	| Создание и запуск контейнера (-d – для удаления привязки к текущей bash сессии, чтобы при ее закрытии контейнер остался запущенным)
+|docker stop <имя>	| Остановка запущенного контейнера (сигнал – SIGTERM, если не останавливается - SIGKILL)
+|docker start <имя>	| Запуск остановленного контейнера
+|docker restart <имя> |	
+|docker pause <имя>	| (сигнал – SIGSTOP)
+|docker unpause <имя> | 	
+|docker kill <имя>	| (сигнал – SIGKILL)
+|docker kill –signal=1 <имя> | 	
+|docker container prune	| Удаление всех остановленных контейнеров
+|docker rename <old_name> <new_name> | 	
+
 
