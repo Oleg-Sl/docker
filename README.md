@@ -5,6 +5,7 @@
   - [**DOCKER CONTAINER**](#docker-container)
   - [**DOCKER IMAGES**](#docker-images)
   - [**DOCKERFILE**](#dockerfile)
+  - [Анализ образа и поиск способов уменьшения его размера](#анализ-образа-и-поиск-способов-уменьшения-его-размера)
 
 [Base Command](https://docs.docker.com/engine/reference/commandline/docker/)
 
@@ -107,7 +108,7 @@ docker build [flag] <*context*>
 ```
 где *context* - это директория со всеми вложеными директориями и файлами (для исключения директорий и файлов из контекста добавить их в файл *.dockerignore*); наиболее часто используемые флаги:
 - f – путь к Dockefile;
-- q – указание имени создаваемого образа «имя:тэг»;
+- t – указание имени создаваемого образа «имя:тэг»;
 
 *Список инструкций Dockerfile*
 | Инструкция | Описание |
@@ -130,7 +131,16 @@ docker build [flag] <*context*>
 |EXPOSE <*port*> [<*port*>/<*protocol*>...] | Cообщение, что контейнер прослушивает указанные сетевые порты во время выполнения (не прокидывает порты, используется только для документирования) 
 |# Comment | Комментарии
 
-
-
+## Анализ образа и поиск способов уменьшения его размера
+Утилита [Dive](https://github.com/wagoodman/dive)<br>
+Установка *Dive*:
+```
+wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
+sudo apt install ./dive_0.9.2_linux_amd64.deb
+```
+Запуск *Dive*
+```
+dive <*name_images:tag_images*>
+```
 
 
