@@ -54,11 +54,28 @@ sudo usermod -aG docker $USER
 |docker start <*name_container*> | Запуск контейнера с именем *name_container*
 |docker restart <*name_container*> | Перезапуск контейнера с именем *name_container*
 |docker pause <*name_container*> | Приостановка контейнера с именем *name_container* (сигнал – SIGSTOP)
-|docker unpause <*name_container*>| Снятие с паузы контейнера с именем *name_container* 
+|docker unpause <*name_container*> | Снятие с паузы контейнера с именем *name_container* 
 |docker kill <*name_container*> | Убить контейнер с именем *name_container* (сигнал – SIGKILL)
 |docker kill –signal=<*number_signal*> <*name_container*> | Послать сигнал *number_signal* для остановки контейнера с именем *name_container*
 |docker container prune	| Удаление всех остановленных контейнеров
 |docker rename <*old_name_container*> <*new_name_container*> | Переименование контейнера с именем *old_name_container* на имя *new_name_container*
+|docker stats | Просмотр информации о запущенных контейнерах
+|docker inspect <*name_container*> | Подробная информация о контейнере с именем *name_container* (при добавлении флага –s к выводу добавляется переменная *SizeRootFs* показывающая сколько места занимает контейнер на диске)
+|docker inspect –f “.<*field_name*>.<*field_name*>.…” <*name_container*> | Получить информацию из поля *field_name*
+|docker logs <*name_container*> | Просмотр списка логов контейнера (добавление флага –f позволяет выводить логи в консоль в реальном времени)
+|docker exec [параметры] <*name_container*> [команда] | Параметры: <br>-i – интерактивный ввод;<br>-t – псевдо tty (по сути ssh-ся в контейнер);<br>-d – запуск в фоне (вне текущего процесса bash);<br>-e – добавление переменной окружения в контейнер;<br>-u – пользователь относительно которого хотим выполнить команду;<br>-w – рабочая директория.<br>Команда Linux: bash, pwd, printenv и др. команды Linux исполняемые внутри контейнера
+
+Можно отфильтровать список логов используя команды Linux:
+```
+grep “<str>” –A <number_rows>
+```
+, где *str* - строка поиска, *number_rows* - количество выводимых строк, возможные варианты флага:
+    -A – *number_rows* строк после вхождения; 
+    -B – *number_rows* строк перед вхождением; 
+    -m – *number_rows* первых строк.
+
+## **DOCKER IMAGES**
+
 
 
 
