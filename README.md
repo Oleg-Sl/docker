@@ -140,7 +140,7 @@ sudo apt install ./dive_0.9.2_linux_amd64.deb
 ```
 Запуск *Dive*
 ```
-dive <*name_images:tag_images*>
+dive <name_images:tag_images>
 ```
 
 
