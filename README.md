@@ -2,7 +2,7 @@
 
 * [Install](#docker-install)
 * [Container](#docker-container)
-* [Images](#images)
+* [Images](#docker-images)
 
 
 
@@ -74,7 +74,24 @@ grep “<str>” –A <number_rows>
     -B – *number_rows* строк перед вхождением; 
     -m – *number_rows* первых строк.
 
+
 ## **DOCKER IMAGES**
+*Список команд docker-images*
+| Команда | Описание |
+|---|---|
+|docker pull <*name_images*> | Скачивание образа <*name_images*> из удаленного репозитория
+|docker push <*name_images*> | Отправка образа *name_images* в удаленный репозиторий
+|docker images | Просмотр всех скачанных образов
+|docker save –output <*name_archive*> <*name_images*> | Скачивание образа *name_images* в архив *name_archive*
+|docker images import <*name_archive*> | Создание образа из архива *name_archive*
+|docker history <*name_images*> | История создания образа *name_images*
+|docker inspect <*name_images*> | Вся информация об образе *name_images*
+|docker images ls | Просмотр всех скачанных образов
+|docker images ls ––format {{.*Tag_name*}} | Просмотр скачанных образов с тэгом *Tag_name*
+|docker images ls ––filter {{before=<*name_images*>}} | Просмотр скачанных образов с именем *name_images*
+|docker images rm <*name_images*> | Удаление образа с именем *name_images*
+|docker tag <*name_images_actual*>:<*tag_name_actual*> <*name_images_new*>:<*tag_name_new*>	| Создание нового образа *name_images_new*:*tag_name_new* на основе исходного *name_images_actual*:*tag_name_actual* (полное копирование)
+|docker images prune | Удаление всех образов у которых тэг равен «none»
 
 
 
