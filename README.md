@@ -1,5 +1,12 @@
 # ***Docker***
 
+[Install](#install)
+[Install](#container)
+[Install](#images)
+
+
+<a id="install"></a>
+
 ## **DOCKER INSTALL**
 1. Обновите индекс apt-пакета и установите пакеты, чтобы разрешить apt использование репозитория по протоколу HTTPS:
 ```
@@ -30,4 +37,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 sudo usermod -aG docker $USER
 ```
+
+<a id="container"></a>
+
+<a id="images"></a>
 
