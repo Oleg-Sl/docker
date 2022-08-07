@@ -91,7 +91,7 @@ grep “<str>” –A <number_rows>
 |docker images ls | Просмотр всех скачанных образов
 |docker images ls ––format {{.*Tag_name*}} | Просмотр скачанных образов с тэгом *Tag_name*
 |docker images ls ––filter {{before=<*name_images*>}} | Просмотр скачанных образов с именем *name_images*
-|docker images rm <*name_images*> | Удаление образа с именем *name_images*
+|docker images rm <*name_images*> <br> docker rmi <*name_images*> | Удаление образа с именем *name_images*
 |docker tag <*name_images_actual*>:<*tag_name_actual*> <*name_images_new*>:<*tag_name_new*>	| Создание нового образа *name_images_new*:*tag_name_new* на основе исходного *name_images_actual*:*tag_name_actual* (полное копирование)
 |docker images prune | Удаление всех образов у которых тэг равен «none»
 
@@ -105,7 +105,7 @@ Dockerfile - это текстовый документ, содержащий в
 ```
 docker build [flag] <*context*>
 ```
-где *context* - это директория со всеми вложеными директориями и файлами; наиболее часто используемые флаги:
+где *context* - это директория со всеми вложеными директориями и файлами (для исключения директорий и файлов из контекста добавить их в файл *.dockerignore*); наиболее часто используемые флаги:
 - f – путь к Dockefile;
 - q – указание имени создаваемого образа «имя:тэг»;
 
