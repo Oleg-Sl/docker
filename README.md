@@ -6,6 +6,12 @@
   - [**DOCKER IMAGES**](#docker-images)
   - [**DOCKERFILE**](#dockerfile)
   - [Анализ образа и поиск способов уменьшения его размера](#анализ-образа-и-поиск-способов-уменьшения-его-размера)
+  - [**DOCKER NETWORK**](#docker-network)
+    - [**Bridge**](#bridge)
+    - [**Host**](#host)
+    - [**Overlay**](#overlay)
+    - [**Macvlan**](#macvlan)
+    - [**None**](#none)
 
 [Base Command](https://docs.docker.com/engine/reference/commandline/docker/)
 
@@ -92,7 +98,7 @@ grep “<str>” –A <number_rows>
 |docker images ls | Просмотр всех скачанных образов
 |docker images ls ––format {{.*Tag_name*}} | Просмотр скачанных образов с тэгом *Tag_name*
 |docker images ls ––filter {{before=<*name_images*>}} | Просмотр скачанных образов с именем *name_images*
-|docker images rm <*name_images*> <br> docker rmi <*name_images*> | Удаление образа с именем *name_images*
+|docker image rm <*name_images*> <br> docker rmi <*name_images*> | Удаление образа с именем *name_images*
 |docker tag <*name_images_actual*>:<*tag_name_actual*> <*name_images_new*>:<*tag_name_new*>	| Создание нового образа *name_images_new*:*tag_name_new* на основе исходного *name_images_actual*:*tag_name_actual* (полное копирование)
 |docker images prune | Удаление всех образов у которых тэг равен «none»
 
@@ -143,4 +149,77 @@ sudo apt install ./dive_0.9.2_linux_amd64.deb
 dive <name_images:tag_images>
 ```
 
+## **DOCKER NETWORK**
+Сеетями в docker управляет утилита *Libnetwork*, выполняет:
+- Балансировку нагрузки
+- Управление сетями
+- Service discovery (чтобы один контейнер находил другой)
+Эта библиотека работает на основе инструментов предоставляемых Linux ядром:
+- Network Namespace
+- Linux Bridge
+- Virtual Ethernet Devices
+- IP Tables
+Типы сетевых driver Docker:
+- [bridge](#bridge) - изолированная сеть между контейнерами
+- [host](#host) - удаление изоляции контейнера
+- [overlay](#overlay) - docker swarm
+- [macvlan](#macvlan) - уникальный MAC адресс для контейнера
+- [none](#none) - без сети
+
+*Список инструкций управления сетями Docker*
+| Инструкция | Описание |
+|---|---|
+|docker network connect <*name_network*> <*name_container>*|Подключение контейнера к сети
+|docker network create <*name_network*>| Создать сеть
+|disconnect| Отключение контейнера от сети
+|docker network inspect <*name_network*>| Параметры сети
+|docker network ls| Список всех сетей
+|docker network prune| Удаление всех сетей
+|docker network rm <*name_network*>| Удаление сети
+Изменение DNS сервера используемого контейнером на этапе создания контейнера выполняется добавлением флага --dns <ip_addr>:
+```
+docker run --name <name_network> -d --dns <ip_addr> <name_images>
+```
+Используемый DNS сервер указан в файле конфигурации:
+```
+/etc/resolv.conf
+```
+
+### **Bridge**
+Это золированная сеть между контейнерами.
+Работает только на 1 хосте. Сеть с именем и типом *bridge* поднимается по умолчанию.
+Создание новой подсети:
+```
+docker network create <name_network>
+```
+Подключение контейнера к созданной сети:
+```
+docker network connect <name_network> <name_container>
+```
+Создание контейнера с указанием его единственной сети:
+```
+docker run --network <name_network> --name <name_container> -d <name_images>
+```
+Создание контейнера с пробросом портов с хост машины внутрь контейнера:
+```
+docker run --network <name_network> -p <port_host:port_container> --name <name_container> -d <name_images>
+```
+
+### **Host**
+Удаляется изоляция контейнера от хостовой сети и работает с ней напрямую.
+Команда создания контейнера с сетью типа host:
+```
+docker run --network host --name <name_container> -d <name_images>
+```
+
+### **Overlay**
+
+### **Macvlan**
+
+### **None**
+Исполльзуется при отсутсвии необходимости сети в контейнере.
+Команда создания контейнера без сети:
+```
+docker run --name <name_container> -d --network none <name_images>
+```
 
