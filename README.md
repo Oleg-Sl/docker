@@ -61,6 +61,8 @@ sudo usermod -aG docker $USER
 |docker ps -a | Просмотр таблицы со всеми остановленными контейнерами
 |docker rm <*name_container*> | Удаление контейнера по имени - *name_container*
 |docker rm <*container_id*> | Удаление контейнера по его идентификатору - *container_id*
+|docker cp <*host_path*> <*name_container:container_path*> | Копирование файлов и директорий с host машины в контейнер
+|docker cp <*name_container:container_path*> <*host_path*> | Копирование файлов и директорий из контейнера  на host машину
 |docker create --name <*name_container*> <*name_images*> | Создание контейнера с именем *name_container* из образа *name_images* (без запуска контейнера) [оф. док.](https://docs.docker.com/engine/reference/commandline/create/)
 |docker run --name <*name_container*> -d <*name_images*>	| Создание и запуск контейнера с именем *name_container* из образа *name_images* (-d – для удаления привязки к текущей bash сессии, чтобы при ее завершении контейнер остался запущенным) [оф. док.](https://docs.docker.com/engine/reference/run/)
 |docker stop <*name_container*>	| Остановка запущенного контейнера с именем *name_container* (посфлается сигнал – SIGTERM, если контейнер не останавливается - SIGKILL)
@@ -241,13 +243,10 @@ docker run --name <name_container> -d --network none <name_images>
 - bind mount
 - tmpfs mount
 
-
-
 ## volume
 Подключение области хостовой машины к контейнеру.
 Тома находятся по умолчанию в /var/lib/docker/volumes/. Другие программы не должны получать к ним доступ напрямую, только через контейнер.
-Команды volume контейнера:
-
+Команды volume контейнера (создание, проверка, список, удаление неипользуемых, удаление):
 ```docker
 docker volume create <name_volume>
 docker volume inspect <name_volume>
@@ -255,7 +254,12 @@ docker volume ls
 docker volume prune
 docker volume rm
 ```
-
+Команды запуск контейнера с томом:
+```docker
+docker run -d --name <name_container> -v <name_volume:path> <name_image:tag>
+docker run -d --name <name_container> --mount source=<name_volume>,target=<path> <name_image:tag>
+docker run -d --name <name_container> --mount source=<name_volume>,destination=<path>,readonly <name_image:tag>
+```
 
 ## bind mount
 Файл или каталог с хоста просто монтируется в контейнер
