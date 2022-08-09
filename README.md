@@ -1,6 +1,9 @@
 # docker
+```docker
 git clone https://github.com/AlariCode/docker-demo-4.git
+```
 # Использование volumes
+```docker
 cd docker-demo-4/
 docker build -t demo4:latest .
 docker volume create demo
@@ -21,7 +24,9 @@ docker rm -f volume-1
 docker rm -f volume-2
 docker volume rm demo
 docker volume ls
+```
 # driver VOLUME 
+```docker
 sudo nano Dockerfile
 ...
 VOLUME ["/opt/app/data"]
@@ -36,8 +41,10 @@ docker rm -f volume-1
 docker volume create demo
 docker volume ls
 docker run --name volume-1 -d -p 3000:3000 -v demo:/opt/app/data demo4
+```
 
 # driver BIND MOUNTS
+```docker
 docker run --name volume-1 -d -p 3000:3000 -v /home/docker/data:/opt/app/data demo4
 docker ps
 cd ~
@@ -46,8 +53,10 @@ curl "127.0.0.1:3000/set?id=123"
 ls data/
 cat data/req
 curl "127.0.0.1:3000/get"
+```
 
 # tmpfs
+```docker
 docker run --name volume-1 -d -p 3000:3000 --tmpfs /opt/app/data demo4
 docker ps
 curl "127.0.0.1:3000/set?id=123"
@@ -57,8 +66,10 @@ docker start volume-1
 curl "127.0.0.1:3000/get"
 
 docker run --name volume-2 -d -p 3001:3000 --mount type=tmpfs,destination=/opt/app/data demo4
+```
 
 # копирование файлов
+```docker
 docker run --name volume-3 -d -p 3000:3000 demo4
 curl "127.0.0.1:3000/get"
 docker cp /home/docker/projects/docker/docker-demo-4/data/req volume-3:/opt/app/data
@@ -67,3 +78,4 @@ docker cp volume-3:/opt/app/data /home/docker/projects/docker/docker-demo-4/test
 cat test/req
 docker cp volume-3:/opt/app/data/req /home/docker/projects/docker/docker-demo-4/test2/req
 cat test2/req
+```
