@@ -244,6 +244,8 @@ docker run --name <name_container> -d --network none <name_images>
 - tmpfs mount
 
 ## volume
+[Официальная документация](https://docs.docker.com/storage/volumes/)
+
 Подключение области хостовой машины к контейнеру.
 Тома находятся по умолчанию в /var/lib/docker/volumes/. Другие программы не должны получать к ним доступ напрямую, только через контейнер.
 Команды volume контейнера (создание, проверка, список, удаление неипользуемых, удаление):
@@ -262,6 +264,8 @@ docker run -d --name <name_container> --mount source=<name_volume>,destination=<
 ```
 
 ## bind mount
+[Официальная документация](https://docs.docker.com/storage/bind-mounts/)
+
 Файл или каталог с хоста просто монтируется в контейнер
 Используется, когда нужно пробросить в контейнер конфигурационные файлы с хоста. Другое очевидное применение — в разработке. Код находится на хосте (вашем ноутбуке), но исполняется в контейнере. Вы меняете код и сразу видите результат.
 Особенности bind mount:
@@ -269,8 +273,16 @@ docker run -d --name <name_container> --mount source=<name_volume>,destination=<
 - Лучше не использовать в продакшене. Для продакшена убедитесь, что код копируется в контейнер, а не монтируется с хоста.
 - Для успешного монтирования указывайте полный путь к файлу или каталогу на хосте.
 - Если приложение в контейнере запущено от root, а совместно используется каталог с ограниченными правами, то в какой-то момент может возникнуть проблема с правами на файлы и невозможность что-то удалить без использования sudo.
+- Команды запуск контейнера с томом:
+```docker
+docker run -d --name <name_container> -v <path_host:path_container> <name_image:tag>
+docker run -d --name <name_container> --mount type=bind,source=<path_host>,destination=<path_container> <name_image:tag>
+docker run -d --name <name_container> --mount type=bind,source="$(pwd)"<path_host>,destination=<path_container> <name_image:tag>
+```
 
 ## tmpfs mount
+[Официальная документация](https://docs.docker.com/storage/volumes/)
+
 Tmpfs монтрирование является временным и сохраняется в оперативной памяти хоста. Когда контейнер останавливается, tmpfs монтирование удаляется и файлы, записанные в нем, не сохраняются.
 Совместное использование tmpfs монтирования между контейнерами не поддерживается.
 Команды tmpfs монтирования контейнера:
